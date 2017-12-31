@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    My First Chat
+  </title>
+
+  <style>
+    .class {
+      background: rgb(219, 212, 212);
+      padding: 3px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .class input[type=text] {
+      border: 0;
+      padding: 10px;
+      width: 80%;
+      margin-right: .5%;
+    }
+
+    .class input[type=submit] {
+      width: 8%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      font-size: 10px;
+    }
+
+    ul li {
+      padding: 5px 10px;
+    }
+
+    ul li:nth-child(odd) {
+      background: #eee;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+  <script>
+    var socket = io();
+
+    function setName() {
+      socket.emit('setUserName', document.getElementById('name').value);
+    }
+
+    var user;
+
+    socket.on('Exists', function (data) {
+      document.getElementById('error-container').innerHTML = data;
+    })
+
+    socket.on('userSet', function (data) {
+      user = data.username;
+      document.body.innerHTML = '<ul id = "message-container"></ul>\
+          <div class="class">\
+          <input type = "text" id = "message">\
+          <input type = "submit" value = "Send" onclick = "sendMessage()">\
+          </div>';
+    });
+
+    function sendMessage() {
+      var msg = document.getElementById('message').value;
+      if (msg) {
+        socket.emit('msg', { message: msg, user: user });
+        document.getElementById('message').value='';
+      }
+    }
+
+    socket.on('newmsg', function (data) {
+      if (user) {
+        document.getElementById('message-container').innerHTML += '<li><b>' +
+          data.user + '</b>: ' + data.message + '</li>'
+      }
+    })
+
+
+  </script>
+
+  <body>
+    <div id="error-container"></div>
+    <input id="name" type="text" name="name" value="" placeholder="Enter your name!">
+    <input type="submit" name="SetName" onclick="setName()">
+    </button>
+  </body>
+
+</html>
