@@ -2,123 +2,289 @@
 <html>
 
 <head>
-  <title>
-    My First Chat
-  </title>
+    <title>
+        My First Chat
+    </title>
 
-  <style>
-    
-    input[type=text],
-    select {
-      width: 50%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/zbKpv.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
 
-    input[type=submit] {
-      width: 50%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+        body {
+            background: #e9e9e9;
+            color: #9a9a9a;
+            font: 100%/1.5em "Droid Sans", sans-serif;
+            margin: 0;
+        }
 
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
+        fieldset {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
 
-    .class {
-      background: rgb(219, 212, 212);
-      padding: 3px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+        h4, h5 {
+            line-height: 1.5em;
+            margin: 0;
+        }
 
-    .class input[type=text] {
-      border: 0;
-      padding: 10px;
-      width: 80%;
-      margin-right: .5%;
-    }
+        hr {
+            background: #e9e9e9;
+            border: 0;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            height: 1px;
+            margin-bottom: 20px;
+            min-height: 1px;
+        }
 
-    .class input[type=submit] {
-      width: 8%;
-      background: rgb(130, 224, 255);
-      border: none;
-      padding: 10px;
-    }
+        input {
+            border: 0;
+            color: inherit;
+            font-family: inherit;
+            font-size: 100%;
+            line-height: normal;
+            margin: 0;
+        }
 
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      font-size: 20px;
-    }
+        p {
+            margin: 0;
+        }
 
-    ul li {
-      padding: 5px 10px;
-    }
+        .clearfix {
+            *zoom: 1;
+        }
 
-    ul li:nth-child(odd) {
-      background: #eee;
-    }
-  </style>
+        /* For IE 6/7 */
+        .clearfix:before, .clearfix:after {
+            content: "";
+            display: table;
+        }
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+        .clearfix:after {
+            clear: both;
+        }
 
-  <script>
-    var socket = io();
+        /* ---------- LIVE-CHAT ---------- */
 
-    function setName() {
-      socket.emit('setUserName', document.getElementById('name').value);
-    }
+        #live-chat {
+            right: 20%;
+            left: 40%;
+            top: 20%;
+            font-size: 12px;
+            right: 24px;
+            position: fixed;
+            width: 300px;
+        }
 
-    var user;
+        @media only screen and (max-width: 500px) {
+            #live-chat {
+                top: 15%;
+                right: 0%;
+                left: 15%;
+                font-size: 12px;
+                right: 24px;
+                position: fixed;
+                width: 300px;
+            }
 
-    socket.on('Exists', function (data) {
-      document.getElementById('error-container').innerHTML = data;
-    })
+            .chat-history {
+                height: 252px;
+                padding: 8px 24px;
+                overflow-y: scroll;
+            }
+        }
 
-    socket.on('userSet', function (data) {
-      user = data.username;
-      document.body.innerHTML = '<ul id = "message-container"></ul>\
-          <div class="class">\
-          <input type = "text" id = "message">\
-          <input type = "submit" value = "Send" onclick = "sendMessage()">\
-          </div>';
-    });
+        #live-chat header {
+            background: #293239;
+            border-radius: 5px 5px 0 0;
+            color: #fff;
+            cursor: pointer;
+            padding: 16px 24px;
+        }
 
-    function sendMessage() {
-      var msg = document.getElementById('message').value;
-      if (msg) {
-        socket.emit('msg', { message: msg, user: user });
-        document.getElementById('message').value = '';
-      }
-    }
+        #live-chat h4:before {
+            background: #1a8a34;
+            border-radius: 50%;
+            content: "";
+            display: inline-block;
+            height: 8px;
+            margin: 0 8px 0 0;
+            width: 8px;
+        }
 
-    socket.on('newmsg', function (data) {
-      if (user) {
-        document.getElementById('message-container').innerHTML += '<li><b>' +
-          data.user + '</b>: ' + data.message + '</li>'
-      }
-    })
+        #live-chat h4 {
+            font-size: 12px;
+        }
+
+        #live-chat h5 {
+            font-size: 10px;
+        }
+
+        #live-chat form {
+            padding: 24px;
+        }
+
+        #live-chat input[type="text"] {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 8px;
+            outline: none;
+            width: 234px;
+        }
+
+        .chat {
+            background: #fff;
+        }
+
+        .chat-history {
+            height: 300px;
+            padding: 8px 24px;
+            overflow-y: scroll;
+        }
+
+        .chat-message-content {
+            margin-left: 10px;
+        }
+
+        h3 {
+            color: black;
+        }
+
+        li {
+            font-size: 12px;
+        }
+
+        input[type=text],
+        select {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 50%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #btn {
+            width: 20%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 4px 6px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-left: 2px;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+    <script>
+        var socket = io();
+
+        function setName() {
+            socket.emit('setUserName', document.getElementById('name').value);
+        }
+
+        var user;
+
+        socket.on('Exists', function (data) {
+            document.getElementById('error-container').innerHTML = data;
+        })
 
 
-  </script>
+        socket.on('userSet', function (data) {
+            user = data.username;
+            document.body.innerHTML = '<div id="live-chat">\n' +
+                '\n' +
+                '        <header class="clearfix">\n' +
+                '\n' +
+                '            <h4>MyChat</h4>\n' +
+                '\n' +
+                '        </header>\n' +
+                '\n' +
+                '        <div class="chat">\n' +
+                '\n' +
+                '            <div class="chat-history">\n' +
+                '\n' +
+                '                <div class="chat-message clearfix">\n' +
+                '\n' +
+                '                    <div class="chat-message-content clearfix">\n' +
+                '\n' +
+                '                        <h2 id="userName"></h2>\n' +
+                '\n' +
+                '                    </div>\n' +
+                '                    <!-- end chat-message-content -->\n' +
+                '\n' +
+                '                </div>\n' +
+                '                <!-- end chat-message -->\n' +
+                '            </div>\n' +
+                '            <!-- end chat-history -->\n' +
+                '\n' +
+                '                <fieldset>\n' +
+                '\n' +
+                '                    <input type="text" id="message" placeholder="Type your message…" autofocus>\n' +
+                '                    <input type="submit" id="btn" VALUE="Send" onclick="sendMessage()">\n' +
+                '\n' +
+                '                </fieldset>\n' +
+                '\n' +
+                '        </div>\n' +
+                '        <!-- end chat -->\n' +
+                '\n' +
+                '    </div>\n'
+        });
 
-  <body>
-    <div id="error-container"></div>
-    <div align='center'><input id="name" type="text" name="name" value="" placeholder="Enter your name!">
-    <input type="submit" name="SetName" onclick="setName()"></div>
-    </button>
-  </body>
+        function sendMessage() {
+            var msg = document.getElementById('message').value;
+            if (msg) {
+                socket.emit('msg', {message: msg, user: user});
+                document.getElementById('message').value = '';
+            }
+        }
+
+        function display() {
+            socket.on('display', function (data) {
+                document.body.innerHTML = data;
+            })
+        }
+
+        socket.on('newmsg', function (data) {
+            if (user) {
+                document.getElementById('userName').innerHTML += '<h3 style="margin-top: -10px">' + data.user + '</h3>' +
+                    '<li style="margin-top: -5px">' + data.message + '</li><hr>';
+            }
+        })
+
+
+    </script>
+
+<body>
+<div id="error-container"></div>
+<div align='center'><input id="name" type="text" name="name" value="" placeholder="Enter your name!">
+    <input type="submit" name="SetName" onclick="setName()">
+    <input type="submit" name="See Users" onclick="display()"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+</body>
 
 </html>
