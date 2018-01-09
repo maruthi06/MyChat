@@ -267,11 +267,7 @@
             })
         }
 
-        socket.on('newmsg', function (data) {
-            window.setInterval(function() {
-            var elem = document.getElementById('a');
-                elem.scrollTop = elem.scrollHeight;
-            }, 5000);
+        socket.on('newmsg', function (data) 
             if (user) {
                 document.getElementById('userName').innerHTML += '<h3 style="margin-top: -10px">' + data.user + '</h3>' +
                     '<li style="margin-top: -5px">' + data.message + '</li><hr>';
