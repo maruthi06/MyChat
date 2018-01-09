@@ -226,7 +226,7 @@
                 '\n' +
                 '            <div class="chat-history">\n' +
                 '\n' +
-                '                <div class="chat-message clearfix">\n' +
+                '                <div id="a" class="chat-message clearfix">\n' +
                 '\n' +
                 '                    <div class="chat-message-content clearfix">\n' +
                 '\n' +
@@ -268,6 +268,10 @@
         }
 
         socket.on('newmsg', function (data) {
+            window.setInterval(function() {
+            var elem = document.getElementById('a');
+                elem.scrollTop = elem.scrollHeight;
+            }, 5000);
             if (user) {
                 document.getElementById('userName').innerHTML += '<h3 style="margin-top: -10px">' + data.user + '</h3>' +
                     '<li style="margin-top: -5px">' + data.message + '</li><hr>';
